@@ -14,7 +14,7 @@ class StatusSaverApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Status Saver',
+      title: 'MediaPocket',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       home: const SplashPage(),
