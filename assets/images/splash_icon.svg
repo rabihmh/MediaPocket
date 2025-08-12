@@ -1,0 +1,97 @@
+<svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" font-family="Arial, sans-serif">
+  <!-- 
+    Final Enhanced Social Media Download Icon
+    Author: Gemini
+    Description: This version incorporates the specific SVG assets provided by the user for maximum accuracy.
+    The icons have been scaled and positioned to fit the layout.
+  -->
+  <defs>
+    <!-- Main background gradient: A vibrant mix of social media brand colors -->
+    <radialGradient id="mainGradient" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#25D366" /> <!-- WhatsApp Green -->
+      <stop offset="50%" stop-color="#E1306C" /> <!-- Instagram Pink -->
+      <stop offset="100%" stop-color="#8E24AA" /> <!-- Instagram Purple -->
+    </radialGradient>
+
+    <!-- Clean white gradient for the main download arrow for a subtle 3D effect -->
+    <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E8E8E8" />
+    </linearGradient>
+
+    <!-- Gradient for WhatsApp icon, from user's SVG -->
+    <linearGradient id="whatsapp-gradient" x1="32" y1="4" x2="32" y2="64.81" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#1df47c"/>
+        <stop offset="0.31" stop-color="#12df63"/>
+        <stop offset="0.75" stop-color="#05c443"/>
+        <stop offset="1" stop-color="#00ba37"/>
+    </linearGradient>
+
+    <!-- Gradient for the new Instagram icon -->
+    <linearGradient gradientUnits="userSpaceOnUse" id="instagram-new-gradient" x1="328.27" x2="183.73" y1="508.05" y2="3.95">
+        <stop offset="0" stop-color="#ffdb73"/>
+        <stop offset="0.08" stop-color="#fdad4e"/>
+        <stop offset="0.15" stop-color="#fb832e"/>
+        <stop offset="0.19" stop-color="#fa7321"/>
+        <stop offset="0.23" stop-color="#f6692f"/>
+        <stop offset="0.37" stop-color="#e84a5a"/>
+        <stop offset="0.48" stop-color="#e03675"/>
+        <stop offset="0.55" stop-color="#dd2f7f"/>
+        <stop offset="0.68" stop-color="#b43d97"/>
+        <stop offset="0.97" stop-color="#4d60d4"/>
+        <stop offset="1" stop-color="#4264db"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Main circular background with the gradient -->
+  <circle cx="96" cy="96" r="92" fill="url(#mainGradient)" />
+  
+  <!-- Inner white border for a clean finish -->
+  <circle cx="96" cy="96" r="88" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-opacity="0.8" />
+
+  <!-- Main Download Arrow -->
+  <g transform="translate(96, 96) scale(1.1)">
+    <!-- Arrow Shadow for depth -->
+    <g transform="translate(2, 2)" opacity="0.15">
+        <rect x="-8" y="-35" width="16" height="50" rx="8" fill="#000"/>
+        <polygon points="-20,10 0,35 20,10" fill="#000"/>
+    </g>
+    <!-- Arrow Body -->
+    <rect x="-8" y="-35" width="16" height="50" rx="8" fill="url(#arrowGradient)" />
+    <polygon points="-20,10 0,35 20,10" fill="url(#arrowGradient)" />
+    <!-- Arrow Highlight for a glossy effect -->
+    <rect x="-6" y="-33" width="4" height="46" rx="2" fill="#FFFFFF" fill-opacity="0.5" />
+  </g>
+
+  <!-- Social Media Icons - Using User-Provided SVGs -->
+  <g id="SocialIcons">
+
+    <!-- WhatsApp Icon (Top Left) - From user SVG -->
+    <g transform="translate(45, 45) scale(0.45)">
+        <rect width="64" height="64" rx="11.2" ry="11.2" fill="url(#whatsapp-gradient)"/>
+        <path d="M27.42,21.38l2,5.43a.76.76,0,0,1-.1.74,10.32,10.32,0,0,1-1.48,1.71.8.8,0,0,0-.16,1.09C28.91,32,32.1,36,36.25,37.43a.79.79,0,0,0,.89-.29l1.66-2.21a.8.8,0,0,1,1-.23L45,37.3a.79.79,0,0,1,.4,1c-.57,1.62-2.36,5.57-6.19,4.93A20.79,20.79,0,0,1,26.4,36c-3.14-3.92-9.34-14,.19-15.14A.8.8,0,0,1,27.42,21.38Z" fill="#fff"/>
+        <path d="M33.6,54.8a24.21,24.21,0,0,1-11.94-3.13l-12,3.08,4.41-9.91A22,22,0,0,1,10,32C10,19.43,20.59,9.2,33.6,9.2S57.2,19.43,57.2,32,46.61,54.8,33.6,54.8ZM22.29,47.37l.73.45a20.13,20.13,0,0,0,10.58,3c10.81,0,19.6-8.43,19.6-18.8S44.41,13.2,33.6,13.2,14,21.63,14,32a18.13,18.13,0,0,0,4,11.34l.75.95-3.61,6.12Z" fill="#fff"/>
+    </g>
+
+    <!-- Instagram Icon (Top Right) - From user SVG -->
+    <g transform="translate(118, 45) scale(0.056)">
+        <rect width="465.06" height="465.06" x="23.47" y="23.47" rx="107.23" ry="107.23" fill="url(#instagram-new-gradient)"/>
+        <path fill="#fff" d="M331,115.22a66.92,66.92,0,0,1,66.65,66.65V330.13A66.92,66.92,0,0,1,331,396.78H181a66.92,66.92,0,0,1-66.65-66.65V181.87A66.92,66.92,0,0,1,181,115.22H331m0-31H181c-53.71,0-97.66,44-97.66,97.66V330.13c0,53.71,44,97.66,97.66,97.66H331c53.71,0,97.66-44,97.66-97.66V181.87c0-53.71-43.95-97.66-97.66-97.66Z"/>
+        <path fill="#fff" d="M256,198.13A57.87,57.87,0,1,1,198.13,256,57.94,57.94,0,0,1,256,198.13m0-31A88.87,88.87,0,1,0,344.87,256,88.87,88.87,0,0,0,256,167.13Z"/>
+        <circle fill="#fff" cx="346.81" cy="163.23" r="21.07"/>
+    </g>
+
+    <!-- TikTok Icon (Bottom Left) - From user SVG -->
+    <g transform="translate(45, 118) scale(0.056)">
+        <path d="M256,0C114.615,0,0,114.615,0,256S114.615,512,256,512,512,397.385,512,256,397.385,0,256,0Z" fill="#010101"/>
+        <path d="M385.62,232.382c-27.184,0-53.634-8.822-74-23.75l-.162,101.5a92.457,92.457,0,1,1-80.178-91.721v49.845a43.657,43.657,0,1,0,31.288,41.876V109.333h51.275a71.773,71.773,0,0,0,71.774,71.773Z" fill="#fff"/>
+    </g>
+
+    <!-- YouTube Icon (Bottom Right) - From user SVG -->
+    <g transform="translate(118, 118) scale(0.9)">
+        <path d="M31.67,9.179c0,0-0.312-2.353-1.271-3.389c-1.217-1.358-2.58-1.366-3.205-1.443C22.717,4,16.002,4,16.002,4h-0.015c0,0-6.715,0-11.191,0.347C4.171,4.424,2.809,4.432,1.591,5.79C0.633,6.826,0.32,9.179,0.32,9.179S0,11.94,0,14.701v2.588c0,2.763,0.32,5.523,0.32,5.523s0.312,2.352,1.271,3.386c1.218,1.358,2.815,1.317,3.527,1.459C7.677,27.919,15.995,28,15.995,28s6.722-0.012,11.199-0.355c0.625-0.08,1.988-0.088,3.205-1.446c0.958-1.034,1.271-3.386,1.271-3.386s0.32-2.761,0.32-5.523v-2.588C31.99,11.94,31.67,9.179,31.67,9.179z" fill="#E02F2F"/>
+        <polygon fill="#FFFFFF" points="12,10 12,22 22,16"/>
+    </g>
+
+  </g>
+</svg>
