@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MediaPocket - Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #0D0D0D;
+            --bg-light: #1A1A1A;
+            --border-color: #2f2f2f;
+            --text-primary: #F0F0F0;
+            --text-secondary: #A0A0A0;
+            --accent-gradient: linear-gradient(90deg, #25D366, #E1306C, #8E24AA);
+        }
+        
+        /* --- General Styles --- */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overscroll-behavior: none;
+        }
+
+        .app-wrapper {
+            max-width: 420px;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-dark);
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* --- Animated Background --- */
+        .app-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(142, 36, 170, 0.15) 0%, rgba(142, 36, 170, 0) 70%);
+            top: -50px;
+            left: -50px;
+            animation: move-glow 15s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes move-glow {
+            from { transform: translate(0, 0); }
+            to { transform: translate(150px, 200px); }
+        }
+
+        /* --- Splash Screen --- */
+        #splash-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .splash-logo {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            animation: pulse 2s infinite ease-in-out 2s;
+        }
+        .splash-logo .icon {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            transform: scale(0.5);
+            border-radius: 25%;
+        }
+        .splash-logo .main-arrow {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            animation: pop-in 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards;
+        }
+        #icon-whatsapp { animation: orbit-in 1s ease-out 1.2s forwards; top: 10px; left: 10px; }
+        #icon-instagram { animation: orbit-in 1s ease-out 1.4s forwards; top: 10px; right: 10px; }
+        #icon-tiktok { animation: orbit-in 1s ease-out 1.6s forwards; bottom: 10px; left: 10px; }
+        #icon-youtube { animation: orbit-in 1s ease-out 1.8s forwards; bottom: 10px; right: 10px; }
+
+        @keyframes pop-in {
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        @keyframes orbit-in {
+            0% { opacity: 0; transform: translate(calc(50% - 20px), calc(50% - 20px)) scale(0.5); }
+            100% { opacity: 1; transform: translate(0, 0) scale(1); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* --- Main App --- */
+        #main-app {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+            position: relative;
+            z-index: 1;
+        }
+        .screen { display: none; flex-grow: 1; overflow-y: auto; padding: 24px; padding-bottom: 96px; }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            animation: screen-fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        @keyframes screen-fade-in {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Navigation Bar --- */
+        .nav-bar {
+            border-top: 1px solid var(--border-color);
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 50;
+        }
+        .nav-item.active svg {
+            stroke: url(#accentGradient);
+            transform: scale(1.1);
+        }
+        .nav-item.active p {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .nav-item svg, .nav-item p {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-item:not(.active):hover svg {
+            stroke: #fff;
+        }
+
+        /* --- UI Elements --- */
+        .accent-gradient { background: var(--accent-gradient); }
+        .accent-text { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card { background-color: var(--bg-light); border: 1px solid var(--border-color); transition: transform 0.2s ease, box-shadow 0.2s ease; border-radius: 1rem; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .input-field { background-color: #2a2a2a; border: 1px solid #444; transition: all 0.2s ease; }
+        .input-field:focus { box-shadow: 0 0 15px rgba(142, 36, 170, 0.4); border-color: #8E24AA; }
+        .btn-primary { transition: transform 0.2s ease, box-shadow 0.3s ease; }
+        .btn-primary:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(225, 48, 108, 0.4); }
+        .tab-item.active {
+            border-bottom: 2px solid;
+            border-image: var(--accent-gradient) 1;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .status-img-container {
+            position: relative; overflow: hidden; border-radius: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+        .status-img-container:hover { transform: scale(1.05); }
+        .status-img-container .saved-tick {
+            position: absolute; top: 8px; right: 8px; background-color: rgba(37, 211, 102, 0.9);
+            border-radius: 50%; padding: 4px; opacity: 0; transform: scale(0.5); transition: all 0.3s ease;
+        }
+        .status-img-container.is-saved .saved-tick { opacity: 1; transform: scale(1); }
+        
+        /* --- Toast Notification --- */
+        #toast {
+            position: fixed;
+            bottom: -100px; /* Start off-screen */
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, #25D366, #1DB954);
+            color: white; padding: 12px 24px; border-radius: 50px; font-weight: bold;
+            display: flex; align-items: center; gap: 10px;
+            z-index: 200;
+            transition: bottom 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+        }
+        #toast.show { bottom: 100px; }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+
+        <!-- Splash Screen -->
+        <div id="splash-screen">
+            <div class="splash-logo">
+                <svg class="main-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22V2M12 22L6 16M12 22L18 16" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <img id="icon-whatsapp" class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/2044px-WhatsApp.svg.png">
+                <img id="icon-instagram" class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png">
+                <img id="icon-tiktok" class="icon" src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/TikTok_logo.svg/2560px-TikTok_logo.svg.png">
+                <img id="icon-youtube" class="icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1024px-YouTube_full-color_icon_%282017%29.svg.png">
+            </div>
+        </div>
+
+        <!-- Main App Content -->
+        <div id="main-app" class="hidden">
+            <div class="flex-grow overflow-y-auto">
+                <!-- Home Screen -->
+                <div id="home" class="screen active">
+                    <div class="flex items-center gap-3 mb-8">
+                        <img src="https://i.ibb.co/6yv2T8H/launcher-Icon.png" alt="MediaPocket Logo" class="w-10 h-10">
+                        <h1 class="text-3xl font-extrabold">MediaPocket</h1>
+                    </div>
+                    <p class="text-lg text-gray-400 mb-6">المكان الأمثل لحفظ الوسائط من منصاتك المفضلة.</p>
+                    <div class="relative w-full mb-8">
+                        <input type="text" placeholder="الصق أي رابط هنا..." class="input-field w-full p-4 pr-12 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <button class="absolute top-1/2 -translate-y-1/2 left-3 p-2 rounded-full hover:bg-gray-600 transition-colors">
+                            <i data-lucide="clipboard-paste" class="w-6 h-6 text-gray-400"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 gap-5">
+                        <div class="card p-5 flex items-center gap-4 cursor-pointer" onclick="showScreen('whatsapp')">
+                            <i data-lucide="message-circle" class="w-10 h-10 p-2 bg-green-500/20 text-green-400 rounded-lg"></i>
+                            <div><h2 class="font-bold text-lg">تحميل حالات واتساب</h2><p class="text-sm text-gray-400">عرض وحفظ صور وفيديوهات الحالات</p></div>
+                            <i data-lucide="chevron-left" class="mr-auto text-gray-500"></i>
+                        </div>
+                        <div class="card p-5 flex items-center gap-4 cursor-pointer" onclick="showScreen('instagram')">
+                            <i data-lucide="instagram" class="w-10 h-10 p-2 bg-pink-500/20 text-pink-400 rounded-lg"></i>
+                            <div><h2 class="font-bold text-lg">التحميل من انستغرام</h2><p class="text-sm text-gray-400">حفظ الصور، الفيديوهات، والريلز</p></div>
+                            <i data-lucide="chevron-left" class="mr-auto text-gray-500"></i>
+                        </div>
+                         <div class="card p-5 flex items-center gap-4 cursor-pointer" onclick="showScreen('tiktok')">
+                            <i data-lucide="music-4" class="w-10 h-10 p-2 bg-cyan-500/20 text-cyan-400 rounded-lg"></i>
+                            <div><h2 class="font-bold text-lg">التحميل من تيك توك</h2><p class="text-sm text-gray-400">حفظ الفيديوهات بدون علامة مائية</p></div>
+                            <i data-lucide="chevron-left" class="mr-auto text-gray-500"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Screen -->
+                <div id="whatsapp" class="screen">
+                     <h1 class="text-2xl font-bold mb-6">حالات واتساب</h1>
+                     <div class="flex border-b border-gray-700 mb-6">
+                         <button class="tab-item flex-1 p-3 text-gray-400 active" onclick="showTab('images')">الصور (12)</button>
+                         <button class="tab-item flex-1 p-3 text-gray-400" onclick="showTab('videos')">الفيديوهات (6)</button>
+                     </div>
+                     <div id="images-tab" class="grid grid-cols-3 gap-2">
+                         <div class="status-img-container group is-saved"><img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&q=80&w=200" class="w-full h-full object-cover"><div class="saved-tick"><i data-lucide="check" class="w-4 h-4 text-white"></i></div></div>
+                         <div class="status-img-container group"><img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&q=80&w=200" class="w-full h-full object-cover"></div>
+                         <div class="status-img-container group"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&q=80&w=200" class="w-full h-full object-cover"></div>
+                         <div class="status-img-container group is-saved"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&q=80&w=200" class="w-full h-full object-cover"><div class="saved-tick"><i data-lucide="check" class="w-4 h-4 text-white"></i></div></div>
+                         <div class="status-img-container group"><img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&q=80&w=200" class="w-full h-full object-cover"></div>
+                     </div>
+                     <div id="videos-tab" class="hidden grid grid-cols-3 gap-2">
+                         <div class="status-img-container group"><img src="https://images.unsplash.com/photo-1515266591878-f93e32bc5937?ixlib=rb-4.0.3&q=80&w=200" class="w-full h-full object-cover"></div>
+                         <div class="status-img-container group is-saved"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&q=80&w=200" class="w-full h-full object-cover"><div class="saved-tick"><i data-lucide="check" class="w-4 h-4 text-white"></i></div></div>
+                     </div>
+                </div>
+
+                <!-- Instagram Screen -->
+                <div id="instagram" class="screen items-center justify-center text-center">
+                     <i data-lucide="instagram" class="w-20 h-20 mb-4 accent-text"></i>
+                     <h1 class="text-2xl font-bold mb-2">التحميل من انستغرام</h1>
+                     <p class="text-gray-400 mb-6 max-w-sm">انسخ رابط الصورة، الفيديو، أو الريلز من انستغرام والصقه هنا للتحميل.</p>
+                     <div class="relative w-full max-w-sm mb-4">
+                        <input type="text" placeholder="https://instagram.com/..." class="input-field w-full p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-center">
+                    </div>
+                    <button class="btn-primary w-full max-w-sm p-4 rounded-xl font-bold text-white accent-gradient" onclick="showToast()">
+                        تحميل
+                    </button>
+                </div>
+                
+                <!-- TikTok Screen -->
+                <div id="tiktok" class="screen items-center justify-center text-center">
+                     <i data-lucide="music-4" class="w-20 h-20 mb-4 accent-text"></i>
+                     <h1 class="text-2xl font-bold mb-2">التحميل من تيك توك</h1>
+                     <p class="text-gray-400 mb-6 max-w-sm">انسخ رابط الفيديو من تيك توك والصقه هنا.</p>
+                     <div class="relative w-full max-w-sm mb-4">
+                        <input type="text" placeholder="https://tiktok.com/..." class="input-field w-full p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-center">
+                    </div>
+                    <div class="flex items-center justify-center gap-3 w-full max-w-sm mb-4">
+                        <input type="checkbox" id="watermark" class="form-checkbox h-5 w-5 accent-gradient rounded text-purple-500 border-gray-600 focus:ring-purple-500" checked>
+                        <label for="watermark" class="text-gray-300">تحميل بدون علامة مائية</label>
+                    </div>
+                    <button class="btn-primary w-full max-w-sm p-4 rounded-xl font-bold text-white accent-gradient" onclick="showToast()">
+                        تحميل
+                    </button>
+                </div>
+
+                <!-- My Pocket Screen -->
+                <div id="pocket" class="screen">
+                    <h1 class="text-2xl font-bold mb-4">جيبي (My Pocket)</h1>
+                    <p class="text-gray-400 mb-6">كل ما قمت بحفظه من جميع المنصات في مكان واحد.</p>
+                    <div class="grid grid-cols-3 gap-2">
+                         <img src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&q=80&w=200" class="rounded-lg w-full h-full object-cover">
+                         <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&q=80&w=200" class="rounded-lg w-full h-full object-cover">
+                         <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&q=80&w=200" class="rounded-lg w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation Bar -->
+            <div class="nav-bar absolute bottom-0 left-0 right-0 h-24 flex justify-around items-center">
+                <div class="nav-item text-center cursor-pointer active" onclick="showScreen('home')">
+                    <i data-lucide="home" class="w-7 h-7 mx-auto"></i>
+                    <p class="text-xs mt-1">الرئيسية</p>
+                </div>
+                <div class="nav-item text-center cursor-pointer" onclick="showScreen('whatsapp')">
+                    <i data-lucide="message-circle" class="w-7 h-7 mx-auto"></i>
+                    <p class="text-xs mt-1">واتساب</p>
+                </div>
+                <div class="nav-item text-center cursor-pointer" onclick="showScreen('pocket')">
+                    <i data-lucide="folder-down" class="w-7 h-7 mx-auto"></i>
+                    <p class="text-xs mt-1">جيبي</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification Element (outside the main container) -->
+    <div id="toast">
+        <i data-lucide="check-circle" class="w-6 h-6"></i>
+        <span>تم الحفظ في "جيبي" بنجاح!</span>
+    </div>
+    
+    <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#25D366" /><stop offset="50%" stop-color="#E1306C" /><stop offset="100%" stop-color="#8E24AA" /></linearGradient></defs></svg>
+
+    <script>
+        lucide.createIcons();
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            const activeNavItem = Array.from(document.querySelectorAll('.nav-item')).find(item => item.getAttribute('onclick') === `showScreen('${screenId}')`);
+            if (activeNavItem) activeNavItem.classList.add('active');
+        }
+        
+        function showTab(tabId) {
+            document.getElementById('images-tab').style.display = tabId === 'images' ? 'grid' : 'none';
+            document.getElementById('videos-tab').style.display = tabId === 'videos' ? 'grid' : 'none';
+            document.querySelector('.tab-item[onclick="showTab(\'images\')"]').classList.toggle('active', tabId === 'images');
+            document.querySelector('.tab-item[onclick="showTab(\'videos\')"]').classList.toggle('active', tabId === 'videos');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const main = document.getElementById('main-app');
+                
+                splash.style.opacity = '0';
+                splash.style.transform = 'scale(1.1)';
+                
+                main.style.opacity = '1';
+                main.classList.remove('hidden');
+
+                setTimeout(() => splash.style.display = 'none', 700);
+            }, 3500);
+
+            showScreen('home');
+        });
+    </script>
+</body>
+</html>

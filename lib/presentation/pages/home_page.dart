@@ -24,14 +24,26 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       body: pages[_index],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _index,
-        onDestinationSelected: (i) => setState(() => _index = i),
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.chat_bubble_rounded), label: 'WhatsApp'),
-          NavigationDestination(icon: Icon(Icons.camera_alt_outlined), label: 'Instagram'),
-          NavigationDestination(icon: Icon(Icons.music_note_outlined), label: 'TikTok'),
-        ],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: const Color(0x141E1E1E),
+          border: const Border(top: BorderSide(color: Color(0xFF2F2F2F))),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10)],
+        ),
+        padding: const EdgeInsets.only(top: 8),
+        child: NavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          indicatorColor: Colors.transparent,
+          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+          selectedIndex: _index,
+          onDestinationSelected: (i) => setState(() => _index = i),
+          destinations: const [
+            NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'الرئيسية'),
+            NavigationDestination(icon: Icon(Icons.message_outlined), selectedIcon: Icon(Icons.message), label: 'واتساب'),
+            NavigationDestination(icon: Icon(Icons.download_outlined), selectedIcon: Icon(Icons.download), label: 'جيبي'),
+          ],
+        ),
       ),
     );
   }
