@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'tabs/instagram_soon_page.dart';
-import 'tabs/tiktok_soon_page.dart';
 import 'tabs/whatsapp/whatsapp_page.dart';
+import 'landing/home_landing_page.dart';
+import 'pocket/pocket_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,9 +17,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final pages = [
+      const HomeLandingPage(),
       const WhatsappPage(),
-      const InstagramSoonPage(),
-      const TiktokSoonPage(),
+      const PocketPage(),
     ];
 
     return Scaffold(
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           onDestinationSelected: (i) => setState(() => _index = i),
           destinations: const [
             NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: 'الرئيسية'),
-            NavigationDestination(icon: Icon(Icons.message_outlined), selectedIcon: Icon(Icons.message), label: 'واتساب'),
+            NavigationDestination(icon: Icon(Icons.chat_bubble_outline), selectedIcon: Icon(Icons.chat_bubble), label: 'واتساب'),
             NavigationDestination(icon: Icon(Icons.download_outlined), selectedIcon: Icon(Icons.download), label: 'جيبي'),
           ],
         ),
