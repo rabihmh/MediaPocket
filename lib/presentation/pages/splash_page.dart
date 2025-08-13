@@ -38,22 +38,19 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: ScaleTransition(
           scale: _scale,
-          child: Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(24),
-              boxShadow: [
-                BoxShadow(color: color.withOpacity(0.3), blurRadius: 24, spreadRadius: 2),
-              ],
+          child: Padding(
+            padding: const EdgeInsets.all(32),
+            child: SizedBox.expand(
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Image.asset('assets/images/splash_icon.png'),
+              ),
             ),
-            child: Icon(Icons.download_for_offline_rounded, size: 64, color: color),
           ),
         ),
       ),
