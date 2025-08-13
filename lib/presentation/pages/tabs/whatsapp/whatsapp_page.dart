@@ -17,7 +17,7 @@ class _WhatsappPageState extends ConsumerState<WhatsappPage> with SingleTickerPr
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -36,7 +36,6 @@ class _WhatsappPageState extends ConsumerState<WhatsappPage> with SingleTickerPr
         bottom: TabBar(controller: _tabController, tabs: const [
           Tab(text: 'Images'),
           Tab(text: 'Videos'),
-          Tab(text: 'Saved'),
         ]),
       ),
       body: Stack(
@@ -46,7 +45,6 @@ class _WhatsappPageState extends ConsumerState<WhatsappPage> with SingleTickerPr
             children: [
               RefreshIndicator(onRefresh: onRefresh, child: MediaGrid(items: state.images)),
               RefreshIndicator(onRefresh: onRefresh, child: MediaGrid(items: state.videos)),
-              RefreshIndicator(onRefresh: onRefresh, child: MediaGrid(items: state.saved)),
             ],
           ),
           if (state.isLoading)

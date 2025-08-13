@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_theme.dart';
-// import '../tabs/instagram_soon_page.dart';
-// import '../tabs/tiktok_soon_page.dart';
-// import '../tabs/whatsapp/whatsapp_page.dart';
+import '../tabs/instagram_download_page.dart';
+import '../tabs/tiktok_download_page.dart';
+import '../tabs/whatsapp/whatsapp_page.dart';
 
 class HomeLandingPage extends StatelessWidget {
   const HomeLandingPage({super.key});
@@ -30,23 +30,23 @@ class HomeLandingPage extends StatelessWidget {
               decoration: const InputDecoration(hintText: '...الصق أي رابط هنا'),
             ),
             const SizedBox(height: 20),
-            const _LandingCard(
+            _LandingCard(
               title: 'تحميل حالات واتساب',
               subtitle: 'عرض وحفظ صور وفيديوهات الحالات',
-              trailing: Icon(Icons.chat_bubble, color: Colors.green),
-              onTap: null,
+              trailing: const Icon(Icons.chat_bubble, color: Colors.green),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const WhatsappPage())),
             ),
-            const _LandingCard(
+            _LandingCard(
               title: 'التحميل من انستغرام',
               subtitle: 'حفظ الصور، الفيديوهات، والريلز',
-              trailing: Icon(Icons.camera_alt_outlined, color: Colors.pinkAccent),
-              onTap: null,
+              trailing: const Icon(Icons.camera_alt_outlined, color: Colors.pinkAccent),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const InstagramDownloadPage())),
             ),
-            const _LandingCard(
+            _LandingCard(
               title: 'التحميل من تيك توك',
               subtitle: 'حفظ الفيديوهات بدون علامة مائية',
-              trailing: Icon(Icons.music_note_outlined, color: Colors.cyanAccent),
-              onTap: null,
+              trailing: const Icon(Icons.music_note_outlined, color: Colors.cyanAccent),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TiktokDownloadPage())),
             ),
             const SizedBox(height: 24),
             DecoratedBox(
